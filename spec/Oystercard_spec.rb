@@ -1,4 +1,5 @@
 require 'oystercard'
+
 describe Oystercard do
   let(:station) { double('station double') }
   let(:station1) { double('station double') }
@@ -58,11 +59,11 @@ describe Oystercard do
       expect { subject.touch_in(station) }.to raise_error message
     end
 
-    it 'it remembers the start station' do
-      subject.top_up(Oystercard::FARELIMIT)
-      subject.touch_in(station)
-      expect(subject.start_station).to eq station
-    end
+    # it 'it remembers the start station' do
+    #   subject.top_up(Oystercard::FARELIMIT)
+    #   subject.touch_in(station)
+    #   expect(subject.start_station).to eq station
+    # end
   end
 
 
@@ -83,20 +84,13 @@ describe Oystercard do
       subject.top_up(Oystercard::FARELIMIT)
       subject.touch_in(station)
       subject.touch_out(station)
-      expect(subject.start_station).to eq nil
+      expect(subject.in_journey?).to eq false
     end
 
     it 'it deducts FARELIMIT from balance' do
       subject.top_up(Oystercard::FARELIMIT)
       subject.touch_in(station)
       expect { subject.touch_out(station) }.to change{ subject.balance }.by(-Oystercard::FARELIMIT)
-    end
-
-    it 'forgets the start station' do
-      subject.top_up(Oystercard::FARELIMIT)
-      subject.touch_in(station)
-      subject.touch_out(station)
-      expect(subject.start_station).to eq nil
     end
 
     it 'records journey from start to end station' do

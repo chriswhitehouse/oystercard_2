@@ -1,12 +1,15 @@
+require './lib/journey.rb'
+require './lib/station.rb'
+
 class Oystercard
-attr_accessor :balance, :state, :start_station, :exit_station, :journeys
+attr_accessor :balance, :journeys, :current_journey
 LIMIT = 90
 FARELIMIT = 1
 
   def initialize
     @balance = 0
     @fare_limit = FARELIMIT
-    @start_station = nil
+    @current_journey = nil
     @journeys = []
   end
 
@@ -19,18 +22,19 @@ FARELIMIT = 1
   def touch_in(station)
     raise "Not enough funds" if @balance < @fare_limit
 
-    @start_station = station
+    @current_journey = Journey.new
+    @current_journey.start_journey(station)
   end
 
   def in_journey?
-    @start_station != nil
+    @current_journey != nil
   end
 
   def touch_out(station)
     deduct(@fare_limit)
-    @exit_station = station
-    @journeys.push({@start_station => @exit_station})
-    @start_station = nil
+    @current_journey.end_journey(station)
+    @journeys.push({@current_journey.start_station => @current_journey.end_station})
+    @current_journey = nil
   end
 
   private
