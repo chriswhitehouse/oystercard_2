@@ -1,5 +1,5 @@
 class Oystercard
-attr_reader :balance, :state, :start_station, :journeys
+attr_accessor :balance, :state, :start_station, :exit_station, :journeys
 LIMIT = 90
 FARELIMIT = 1
 
@@ -11,7 +11,7 @@ FARELIMIT = 1
   end
 
   def top_up(amount)
-    raise "Balance cannot exceed #{LIMIT}" if @balance + amount > LIMIT
+    raise "Balance cannot exceed #{LIMIT}" if (@balance + amount) > LIMIT
 
     @balance += amount
   end
@@ -19,22 +19,18 @@ FARELIMIT = 1
   def touch_in(station)
     raise "Not enough funds" if @balance < @fare_limit
 
-    #@journeys.push([station]) #new
     @start_station = station
-    station
   end
 
   def in_journey?
-    @start_station
-    #@journeys.length > 0 ? @journeys[-1].length == 1 : false #new
+    @start_station != nil
   end
 
   def touch_out(station)
     deduct(@fare_limit)
-    #@journeys[-1].push(station) #new
-    @journeys.push({@start_station => station})
+    @exit_station = station
+    @journeys.push({@start_station => @exit_station})
     @start_station = nil
-    #@journeys[-1].to_h #new
   end
 
   private

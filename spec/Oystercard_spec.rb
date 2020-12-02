@@ -50,7 +50,7 @@ describe Oystercard do
     it 'sets card state to in journey' do
       subject.top_up(Oystercard::FARELIMIT)
       subject.touch_in(station)
-      expect(subject.start_station).to eq station
+      expect(subject.in_journey?). to eq true
     end
 
     it 'raises an error when balance is below 1' do
