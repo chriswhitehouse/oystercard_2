@@ -28,4 +28,39 @@ describe Journey do
     end
   end
 
+  describe "#valid_trip" do
+    it "should return false when no station given for start station" do
+      expect(journey.valid_trip).to eq false
+    end
+
+    it "should return false when no station given for end station" do
+      journey.start_journey("Euston")
+      expect(journey.valid_trip).to eq false
+    end
+
+    it "should return true when start and end station given" do
+      journey.start_journey("Euston")
+      journey.end_journey("Picadilly")
+      expect(journey.valid_trip).to eq true
+    end
+  end
+
+  pending "#calculate_fare" do
+    
+  end
+  
+  describe "#fare" do
+    it "should return minimum fare if touch in and touch out" do
+      journey.start_journey("Euston")
+      journey.end_journey("Picadilly")
+      expect(journey.fare).to eq Journey::MINIMUM_FARE
+    end
+
+    it "should return penalty fare if touch in but not touch out" do
+      journey.start_journey("Euston")
+      expect(journey.fare).to eq Journey::PENALTY_FARE
+    end
+
+  end
+
  end
