@@ -26,10 +26,6 @@ FARELIMIT = 1
     @current_journey.start_journey(station)
   end
 
-  def in_journey?
-    @current_journey != nil
-  end
-
   def touch_out(station)
     deduct(@fare_limit)
     @current_journey.end_journey(station)
