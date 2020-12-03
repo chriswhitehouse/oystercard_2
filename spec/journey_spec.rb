@@ -42,11 +42,7 @@ describe Journey do
       journey.start_journey("Euston")
       journey.end_journey("Picadilly")
       expect(journey.valid_trip).to eq true
-    end
-  end
-
-  pending "#calculate_fare" do
-    
+    end  
   end
   
   describe "#fare" do
