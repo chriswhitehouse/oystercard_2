@@ -45,10 +45,6 @@ describe Journey do
     end
   end
 
-  pending "#calculate_fare" do
-    
-  end
-  
   describe "#fare" do
     it "should return minimum fare if touch in and touch out" do
       journey.start_journey("Euston")
