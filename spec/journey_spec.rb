@@ -42,9 +42,9 @@ describe Journey do
       journey.start_journey("Euston")
       journey.end_journey("Picadilly")
       expect(journey.valid_trip).to eq true
-    end  
+    end
   end
-  
+
   describe "#fare" do
     it "should return minimum fare if touch in and touch out" do
       journey.start_journey("Euston")
@@ -56,7 +56,5 @@ describe Journey do
       journey.start_journey("Euston")
       expect(journey.fare).to eq Journey::PENALTY_FARE
     end
-
   end
-
  end
